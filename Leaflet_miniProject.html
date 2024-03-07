@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
+<style>
+body {font-family: "Lato", sans-serif;}
+
+.sidebar {
+  height: 100%;
+  width: 160px;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  background-color: #111;
+  overflow-x: hidden;
+  padding-top: 16px;
+}
+
+.sidebar a {
+  padding: 6px 8px 6px 16px;
+  text-decoration: none;
+  font-size: 20px;
+  color: #818181;
+  display: block;
+}
+
+.sidebar a:hover {
+  color: #f1f1f1;
+}
+
+.main {
+  margin-left: 160px; /* Same as the width of the sidenav */
+  padding: 0px 10px;
+}
+
+#my_map_id{
+  height: 714px;
+}
+
+@media screen and (max-height: 450px) {
+  .sidebar {padding-top: 15px;}
+  .sidebar a {font-size: 18px;}
+}
+</style>
+</head>
+<body>
+
+<div class="sidebar">
+  <a href="#home"> Countries</a>
+  <a ><span><input type="checkbox" onclick="addCountry(this)"  geojson_var_name="india"/>India Map</span></a>
+  <a ><span><input type="checkbox" />Nepal Map</span></a>
+  <a ><span><input type="checkbox" />China Map</span></a>
+
+  <a href="#home">India States</a>
+  <a ><span><input type="checkbox" />U.P</span></a>
+  <a ><span><input type="checkbox" />M.P</span></a>
+  <a ><span><input type="checkbox" />Telangana</span></a>
+  <a ><span><input type="checkbox" />Chatishgarh</span></a>
+  <a ><span><input type="checkbox" />Uttrakhand</span></a>
+  
+</div>
+
+<div class="main" id="my_map_id">
+</div>
+
+
+</body>
+<script src="D:\Leaflet_Class_7am\boundary_india.json"></script>
+<script>
+
+  // ****************************** MAP ADDTING SECTION **************************//
+  var mp1 = L.map('my_map_id').setView([20.5937, 78.9629],5);
+  L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+  }).addTo(mp1);
+
+  // ****************************** MAP ADDTING SECTION **************************//
+  var country_layer = ''
+  
+  function addCountry(key){
+    console.log(key)
+    
+    if($(key).is(":checked")){
+      var country_stringVar = $(key).attr('geojson_var_name')
+      var country_geoJsonData = window[country_stringVar];   // use for remove 'india' string var to normal variable using window 
+      country_layer = L.geoJSON(country_geoJsonData,{color:'red'})
+      mp1.addLayer(country_layer) 
+    }
+    else{
+      mp1.removeLayer(country_layer)
+    }
+  }
+</script>
+</html> 
