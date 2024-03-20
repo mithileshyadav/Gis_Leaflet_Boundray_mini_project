@@ -53,16 +53,14 @@ body {font-family: "Lato", sans-serif;}
 
 <div class="sidebar">
   <a href="#home"> Countries</a>
-  <a ><span><input type="checkbox" onclick="addCountry(this)"  geojson_var_name="india"/>India Map</span></a>
-  <a ><span><input type="checkbox" />Nepal Map</span></a>
-  <a ><span><input type="checkbox" />China Map</span></a>
+  <a ><span><input type="checkbox" onclick="addCountry(this)" layer_color="green" geojson_var_name="india"/>India Map</span></a>
+  <a ><span><input type="checkbox" onclick="addCountry(this)" layer_color="blue" geojson_var_name="Nepal" />Nepal Map</span></a>
+  <a ><span><input type="checkbox" onclick="addCountry(this)" layer_color="yellow" geojson_var_name="china"/>China Map</span></a>
 
   <a href="#home">India States</a>
-  <a ><span><input type="checkbox" />U.P</span></a>
-  <a ><span><input type="checkbox" />M.P</span></a>
-  <a ><span><input type="checkbox" />Telangana</span></a>
-  <a ><span><input type="checkbox" />Chatishgarh</span></a>
-  <a ><span><input type="checkbox" />Uttrakhand</span></a>
+  <a ><span><input type="checkbox" onclick="addCountry(this)" layer_color="red" geojson_var_name="up"/>U.P</span></a>
+  <a ><span><input type="checkbox" onclick="addCountry(this)" layer_color="blue" geojson_var_name="mp"/>M.P</span></a>
+  <a ><span><input type="checkbox" onclick="addCountry(this)" layer_color="green" geojson_var_name="telangana" />Telangana</span></a>
   
 </div>
 
@@ -72,6 +70,11 @@ body {font-family: "Lato", sans-serif;}
 
 </body>
 <script src="D:\Leaflet_Class_7am\boundary_india.json"></script>
+<script src="D:\Leaflet_Class_7am\up_boundary.json"></script>
+<script src="D:\Leaflet_Class_7am\nepal_boundary.json"></script>
+<script src="D:\Leaflet_Class_7am\china_boundary.json"></script>
+<script src="D:\Leaflet_Class_7am\mp_boundary.json"></script>
+<script src="D:\Leaflet_Class_7am\telangana_boundary.json"></script>
 <script>
 
   // ****************************** MAP ADDTING SECTION **************************//
@@ -83,18 +86,19 @@ body {font-family: "Lato", sans-serif;}
   // ****************************** MAP ADDTING SECTION **************************//
   var country_layer = ''
   
-  function addCountry(key){
-    console.log(key)
-    
-    if($(key).is(":checked")){
-      var country_stringVar = $(key).attr('geojson_var_name')
-      var country_geoJsonData = window[country_stringVar];   // use for remove 'india' string var to normal variable using window 
-      country_layer = L.geoJSON(country_geoJsonData,{color:'red'})
-      mp1.addLayer(country_layer) 
+  var geoJsonLayers_key_value = {}      // Global variable 
+  function addCountry(keyId){
+    var isChacked = $(keyId).prop('checked');
+    var layer_var_name = $(keyId).attr('geojson_var_name')
+    if(isChacked){
+      var geoJsonVariable = window[layer_var_name];
+      var colorName = $(keyId).attr('layer_color')
+      geoJsonLayers_key_value[layer_var_name] = L.geoJSON(geoJsonVariable,{color:colorName}).addTo(mp1)
     }
     else{
-      mp1.removeLayer(country_layer)
+        mp1.removeLayer(geoJsonLayers_key_value[layer_var_name])
     }
   }
+
 </script>
 </html> 
