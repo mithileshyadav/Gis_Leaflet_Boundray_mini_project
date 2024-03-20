@@ -53,14 +53,14 @@ body {font-family: "Lato", sans-serif;}
 
 <div class="sidebar">
   <a href="#home"> Countries</a>
-  <a ><span><input type="checkbox" onclick="addCountry(this)" layer_color="green" geojson_var_name="india"/>India Map</span></a>
-  <a ><span><input type="checkbox" onclick="addCountry(this)" layer_color="blue" geojson_var_name="Nepal" />Nepal Map</span></a>
-  <a ><span><input type="checkbox" onclick="addCountry(this)" layer_color="yellow" geojson_var_name="china"/>China Map</span></a>
+  <a ><span><input type="checkbox" onclick="addOrRemoveLayer(this)" layer_color="green" geojson_var_name="india"/>India Map</span></a>
+  <a ><span><input type="checkbox" onclick="addOrRemoveLayer(this)" layer_color="blue" geojson_var_name="Nepal" />Nepal Map</span></a>
+  <a ><span><input type="checkbox" onclick="addOrRemoveLayer(this)" layer_color="yellow" geojson_var_name="china"/>China Map</span></a>
 
   <a href="#home">India States</a>
-  <a ><span><input type="checkbox" onclick="addCountry(this)" layer_color="red" geojson_var_name="up"/>U.P</span></a>
-  <a ><span><input type="checkbox" onclick="addCountry(this)" layer_color="blue" geojson_var_name="mp"/>M.P</span></a>
-  <a ><span><input type="checkbox" onclick="addCountry(this)" layer_color="green" geojson_var_name="telangana" />Telangana</span></a>
+  <a ><span><input type="checkbox" onclick="addOrRemoveLayer(this)" layer_color="red" geojson_var_name="up"/>U.P</span></a>
+  <a ><span><input type="checkbox" onclick="addOrRemoveLayer(this)" layer_color="blue" geojson_var_name="mp"/>M.P</span></a>
+  <a ><span><input type="checkbox" onclick="addOrRemoveLayer(this)" layer_color="green" geojson_var_name="telangana" />Telangana</span></a>
   
 </div>
 
@@ -84,10 +84,8 @@ body {font-family: "Lato", sans-serif;}
   }).addTo(mp1);
 
   // ****************************** MAP ADDTING SECTION **************************//
-  var country_layer = ''
-  
   var geoJsonLayers_key_value = {}      // Global variable 
-  function addCountry(keyId){
+  function addOrRemoveLayer(keyId){
     var isChacked = $(keyId).prop('checked');
     var layer_var_name = $(keyId).attr('geojson_var_name')
     if(isChacked){
